@@ -1,5 +1,5 @@
-red_ship_start_scrap = 800
-blu_ship_start_scrap = 800
+red_ship_scrap = 800
+blu_ship_scrap = 800
 
 """WEAPONS"""
 
