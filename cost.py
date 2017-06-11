@@ -4,7 +4,7 @@ blu_ship_scrap = 800
 """WEAPONS"""
 
 basic_laser_cost = 20
-dual_lasers_cost = 25
+dual_lasers_cost = 25 #Not including these because that would be OP
 burst_laser_1_cost = 50
 burst_laser_2_cost = 80
 burst_laser_3_cost = 95
