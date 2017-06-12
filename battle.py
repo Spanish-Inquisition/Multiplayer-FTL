@@ -1,4 +1,5 @@
 from tkinter import *
+
 root = Tk()
 
 # Make and place a canvas widget for events and drawing
@@ -31,5 +32,7 @@ s2img = PIL.ImageTk.PhotoImage(ship2)
 background = canvas.create_image(800, 450, image=bgimg)
 redship = canvas.create_image(400, 450, image=s2img)
 blueship = canvas.create_image(1200, 450, image=s1img)
+
+
 
 root.mainloop()

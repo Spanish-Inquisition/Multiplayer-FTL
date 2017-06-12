@@ -1,4 +1,6 @@
 from tkinter import *
+#Things to do: Add Ion wep buttons, Add heavy laser buttons, add missile buttons, add max missile weapon counter or something to limit missile weapons, add buy more missile buttons.
+import PIL
 from PIL import Image, ImageTk
 
 root = Tk()
@@ -29,8 +31,8 @@ directory = os.path.dirname(os.path.abspath(__file__))
 start_filename = os.path.join(directory, './resources/screens/start.bmp')
 redsetup_filename = os.path.join(directory, './resources/screens/redSetup.bmp')
 bluesetup_filename = os.path.join(directory, './resources/screens/blueSetup.bmp')
-redship_filename = os.path.join(directory, './resources/images/Federation.png')
-blueship_filename = os.path.join(directory, './resources/images/Stealth.png')
+redship_filename = os.path.join(directory, './resources/images/Federation.PNG')
+blueship_filename = os.path.join(directory, './resources/images/Stealth.PNG')
 # filenames and stuff
 
 start_img = Image.open(start_filename)
@@ -48,9 +50,9 @@ bluesetup_img = Image.open(bluesetup_filename)
 bluesetup_img = bluesetup_img.resize((1600, 900))
 bluesetup_photo = ImageTk.PhotoImage(bluesetup_img)
 
-redship_img = Image.open(redship_filename)
+redship_img = PIL.Image.open(redship_filename)
 redship_img = redship_img.resize((500, 300))
-redship_photo = ImageTk.PhotoImage(redship_img)
+redship_photo = PIL.ImageTk.PhotoImage(redship_img)
 
 blueship_img = Image.open(blueship_filename)
 blueship_img = blueship_img.resize((500, 300))
@@ -148,6 +150,10 @@ def overturn():
         blueshieldbutton.configure(state=DISABLED)
         blueenginebutton.configure(state=DISABLED)
         bluewepbutton.configure(state=DISABLED)
+        basic_laser_button.configure(state=DISABLED)
+        burst_laser_1_button.configure(state=DISABLED)
+        burst_laser_2_button.configure(state=DISABLED)
+        burst_laser_3_button.configure(state=DISABLED)
         turn_count = 0
 
 redissuredone = 0
@@ -196,6 +202,10 @@ def reset_buttons():
     blueshieldbutton.configure(state=NORMAL)
     blueenginebutton.configure(state=NORMAL)
     bluewepbutton.configure(state=NORMAL)
+    basic_laser_button.configure(state=NORMAL)
+    burst_laser_1_button.configure(state=NORMAL)
+    burst_laser_2_button.configure(state=NORMAL)
+    burst_laser_3_button.configure(state=NORMAL)
 
 gobutton = Button(root, text="GO!") #THIS BUTTON WILL EXECUTE THE COMMAND THAT DOES YOUR THING ALEX
 gobutton.place(x=750, y=oldy)
@@ -407,16 +417,15 @@ heavy_ion_cost = 45
 ion_2_cost = 70
 #ion
 
-mini_beam_cost = 20
-pike_beam_cost = 55
-halberd_beam_cost = 65
-glaive_beam_cost = 95
-#beam
-
 red_weapon_count = 0
 blue_weapon_count = 0
 red_ship_weapons = []
 blue_ship_weapons = []
+
+red_ship_missile_count = 0
+blue_ship_missile_count = 0
+
+max_missile_weps = 1
 
 def basic_laser_buy():
     global basic_laser_cost
@@ -427,6 +436,8 @@ def basic_laser_buy():
     global blue_ship_weapons
     global red_ship_scrap
     global blue_ship_scrap
+    global turn_count
+    global turn_max
     if current_turn == "red":
         if red_weapon_count < 4 and (red_ship_scrap - basic_laser_cost) >= 0:
             red_weapon_count += 1
@@ -595,6 +606,8 @@ def printallvalues(): #just a test thing
     print(str(blue_wep_lvl))
     print(str(red_ship_scrap))
     print(str(blue_ship_scrap))
+    print(red_ship_weapons)
+    print(blue_ship_weapons)
 
 returnallvalues = Button(root, text="returnallupgradevalues", command=printallvalues)
 returnallvalues.place(x=430, y=70)
