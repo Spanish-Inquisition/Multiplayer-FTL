@@ -10,17 +10,17 @@ blue_ship_scrap = 800
 turn_max = 2
 
 """SYSTEMS"""
-red_shield_lvl = 0
-blue_shield_lvl = 0
-shield_lvl_cost = [125, 20, 30, 40, 60, 80, 100]
+red_shield_lvl = 2
+blue_shield_lvl = 2
+shield_lvl_cost = [0, 0, 0, 20, 30, 40, 60, 80, 100]
 
-red_engine_lvl = 0
-blue_engine_lvl = 0
-engine_lvl_cost = [0, 10, 15, 30, 40, 60, 80, 120]
+red_engine_lvl = 1
+blue_engine_lvl = 1
+engine_lvl_cost = [0, 0, 10, 15, 30, 40, 60, 80, 120]
 
-red_wep_lvl = 0
-blue_wep_lvl = 0
-wep_lvl_cost = [0, 10, 25, 30, 45, 60, 80, 100]
+red_wep_lvl = 1
+blue_wep_lvl = 1
+wep_lvl_cost = [0, 0, 10, 25, 30, 45, 60, 80, 100]
 
 """
 red_power_lvl = 4
@@ -73,6 +73,7 @@ done_newy = 820
 wep_row_1_newy = 670
 wep_row_2_newy = 700
 wep_row_3_newy = 730
+wep_row_4_newy = 760
 
 redship_onscreen = Label(image=redship_photo)      #ASK ALEX HOW HE GOT HIS IMAGES TRANSPARENT BACKGROUNDS
 redship_onscreen.place(x=100, y=oldy)
@@ -100,7 +101,7 @@ def changeimagefirst():
     leto_button.place(y=wep_row_3_newy)
     artemis_button.place(y=wep_row_3_newy)
     hermes_button.place(y=wep_row_3_newy)
-
+    missile_button.place(y=wep_row_4_newy)
 
 def changeimageblue():
     blueturn()
@@ -268,18 +269,18 @@ SHIELD
 def redupgradeshield():  #MAY WANT TO PRINT COST OF NEXT UPGRADE
     global red_shield_lvl
     global red_ship_scrap
-    if (red_shield_lvl == 5) and (red_ship_scrap - shield_lvl_cost[red_shield_lvl+1]) >= 0:
+    if (red_shield_lvl == 7) and (red_ship_scrap - shield_lvl_cost[red_shield_lvl+1]) >= 0:
         red_shield_lvl += 1
         red_ship_scrap -= shield_lvl_cost[red_shield_lvl]
         redshieldbutton.configure(text="Shield Level: " + str(red_shield_lvl) + " MAX LEVEL")
         red_scrap.configure(text=" RED SCRAP: " + str(red_ship_scrap))
         overturn()
-    elif (red_shield_lvl < 6) and (red_ship_scrap - shield_lvl_cost[red_shield_lvl+1]) >= 0:
+    elif (red_shield_lvl < 8) and (red_ship_scrap - shield_lvl_cost[red_shield_lvl+1]) >= 0:
         red_shield_lvl += 1
         red_ship_scrap -= shield_lvl_cost[red_shield_lvl]
         redshieldbutton.configure(text="Shield Level: " + str(red_shield_lvl) + "   Next Cost: " + str(shield_lvl_cost[red_shield_lvl + 1]))
         red_scrap.configure(text=" RED SCRAP: " + str(red_ship_scrap))
-        if red_shield_lvl == 6:
+        if red_shield_lvl == 8:
             redshieldbutton.configure(state=DISABLED)
         overturn()
     else:
@@ -291,18 +292,18 @@ redshieldbutton.place(x=10, y=oldy)
 def blueupgradeshield():
     global blue_shield_lvl
     global blue_ship_scrap
-    if blue_shield_lvl == 5 and (blue_ship_scrap - shield_lvl_cost[blue_shield_lvl+1]) >= 0:
+    if blue_shield_lvl == 7 and (blue_ship_scrap - shield_lvl_cost[blue_shield_lvl+1]) >= 0:
         blue_shield_lvl += 1
         blue_ship_scrap -= shield_lvl_cost[blue_shield_lvl]
         blueshieldbutton.configure(text="Shield Level: " + str(blue_shield_lvl) + " MAX LEVEL")
         blue_scrap.configure(text=" BLUE SCRAP: " + str(blue_ship_scrap))
         overturn()
-    elif blue_shield_lvl < 6 and (blue_ship_scrap - shield_lvl_cost[blue_shield_lvl+1]) >= 0:
+    elif blue_shield_lvl < 8 and (blue_ship_scrap - shield_lvl_cost[blue_shield_lvl+1]) >= 0:
         blue_shield_lvl += 1
         blue_ship_scrap -= shield_lvl_cost[blue_shield_lvl]
         blueshieldbutton.configure(text="Shield Level: " + str(blue_shield_lvl) + "   Next Cost: " + str(shield_lvl_cost[blue_shield_lvl + 1]))
         blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
-        if blue_shield_lvl == 6:
+        if blue_shield_lvl == 8:
             blueshieldbutton.configure(state=DISABLED)
         overturn()
     else:
@@ -322,18 +323,18 @@ ENGINE
 def redupgradeengine():  #MAY WANT TO PRINT COST OF NEXT UPGRADE
     global red_engine_lvl
     global red_ship_scrap
-    if red_engine_lvl == 6 and (red_ship_scrap - engine_lvl_cost[red_engine_lvl+1]) >= 0:
+    if red_engine_lvl == 7 and (red_ship_scrap - engine_lvl_cost[red_engine_lvl+1]) >= 0:
         red_engine_lvl += 1
         red_ship_scrap -= engine_lvl_cost[red_engine_lvl]
         redenginebutton.configure(text="Engine Level: " + str(red_engine_lvl) + " MAX LEVEL")
         red_scrap.configure(text=" RED SCRAP: " + str(red_ship_scrap))
         overturn()
-    elif red_engine_lvl < 7 and (red_ship_scrap - engine_lvl_cost[red_engine_lvl+1]) >= 0:
+    elif red_engine_lvl < 8 and (red_ship_scrap - engine_lvl_cost[red_engine_lvl+1]) >= 0:
         red_engine_lvl += 1
         red_ship_scrap -= engine_lvl_cost[red_engine_lvl]
         redenginebutton.configure(text="Engine Level: " + str(red_engine_lvl) + "   Next Cost: " + str(engine_lvl_cost[red_engine_lvl + 1]))
         red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
-        if red_engine_lvl == 7:
+        if red_engine_lvl == 8:
             redenginebutton.configure(state=DISABLED)
         overturn()
     else:
@@ -345,18 +346,18 @@ redenginebutton.place(x=0, y=oldy)
 def blueupgradeengine():
     global blue_engine_lvl
     global blue_ship_scrap
-    if blue_engine_lvl == 6 and (blue_ship_scrap - engine_lvl_cost[blue_engine_lvl + 1]) >= 0:
+    if blue_engine_lvl == 7 and (blue_ship_scrap - engine_lvl_cost[blue_engine_lvl + 1]) >= 0:
         blue_engine_lvl += 1
         blue_ship_scrap -= engine_lvl_cost[blue_engine_lvl]
         blueenginebutton.configure(text="Engine Level: " + str(blue_engine_lvl) + " MAX LEVEL")
         blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
         overturn()
-    elif blue_engine_lvl < 7 and (blue_ship_scrap - engine_lvl_cost[blue_engine_lvl + 1]) >= 0:
+    elif blue_engine_lvl < 8 and (blue_ship_scrap - engine_lvl_cost[blue_engine_lvl + 1]) >= 0:
         blue_engine_lvl += 1
         blue_ship_scrap -= engine_lvl_cost[blue_engine_lvl]
         blueenginebutton.configure(text="Engine Level: " + str(blue_engine_lvl) + "   Next Cost: " + str(engine_lvl_cost[blue_engine_lvl + 1]))
         blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
-        if blue_engine_lvl == 7:
+        if blue_engine_lvl == 8:
             blueenginebutton.configure(state=DISABLED)
         overturn()
     else:
@@ -376,18 +377,18 @@ WEP
 def redupgradewep():  #MAY WANT TO PRINT COST OF NEXT UPGRADE
     global red_wep_lvl
     global red_ship_scrap
-    if red_wep_lvl == 6 and (red_ship_scrap - wep_lvl_cost[red_wep_lvl + 1]) >= 0:
+    if red_wep_lvl == 7 and (red_ship_scrap - wep_lvl_cost[red_wep_lvl + 1]) >= 0:
         red_wep_lvl += 1
         red_ship_scrap -= wep_lvl_cost[red_wep_lvl]
         redwepbutton.configure(text="Wep Level: " + str(red_wep_lvl) + " MAX LEVEL")
         red_scrap.configure(text=" RED SCRAP: " + str(red_ship_scrap))
         overturn()
-    elif red_wep_lvl < 7 and (red_ship_scrap - wep_lvl_cost[red_wep_lvl + 1]) >= 0:
+    elif red_wep_lvl < 8 and (red_ship_scrap - wep_lvl_cost[red_wep_lvl + 1]) >= 0:
         red_wep_lvl += 1
         red_ship_scrap -= wep_lvl_cost[red_wep_lvl]
         redwepbutton.configure(text="Wep Level: " + str(red_wep_lvl) + "   Next Cost: " + str(wep_lvl_cost[red_wep_lvl + 1]))
         red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
-        if red_wep_lvl == 7:
+        if red_wep_lvl == 8:
             redwepbutton.configure(state=DISABLED)
         overturn()
     else:
@@ -399,18 +400,18 @@ redwepbutton.place(x=0, y=oldy)
 def blueupgradewep():
     global blue_wep_lvl
     global blue_ship_scrap
-    if blue_wep_lvl == 6 and (blue_ship_scrap - wep_lvl_cost[blue_wep_lvl + 1]) >= 0:
+    if blue_wep_lvl == 7 and (blue_ship_scrap - wep_lvl_cost[blue_wep_lvl + 1]) >= 0:
         blue_wep_lvl += 1
         blue_ship_scrap -= wep_lvl_cost[blue_wep_lvl]
         bluewepbutton.configure(text="Wep Level: " + str(blue_wep_lvl) + " MAX LEVEL")
         blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
         overturn()
-    elif blue_wep_lvl < 7 and (blue_ship_scrap - wep_lvl_cost[blue_wep_lvl + 1]) >= 0:
+    elif blue_wep_lvl < 8 and (blue_ship_scrap - wep_lvl_cost[blue_wep_lvl + 1]) >= 0:
         blue_wep_lvl += 1
         blue_ship_scrap -= wep_lvl_cost[blue_wep_lvl]
         bluewepbutton.configure(text="Wep Level: " + str(blue_wep_lvl) + "   Next Cost: " + str(wep_lvl_cost[blue_wep_lvl + 1]))
         blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
-        if blue_wep_lvl == 7:
+        if blue_wep_lvl == 8:
             bluewepbutton.configure(state=DISABLED)
         overturn()
     else:
@@ -447,6 +448,7 @@ leto_cost = 20
 artemis_cost = 38
 hermes_cost = 45
 #missiles
+missile_cost = 5
 
 ion_cost = 30
 heavy_ion_cost = 45
@@ -808,7 +810,7 @@ def leto_buy():
         if blue_weapon_count < 4 and (blue_ship_scrap - leto_cost) >= 0:
             blue_weapon_count += 1
             blue_ship_missile_weps += 1
-            red_ship_missile_count += missile_increase
+            blue_ship_missile_count += missile_increase
             blue_ship_scrap -= leto_cost
             blue_ship_weapons.append("leto")
             build_weps()
@@ -852,7 +854,7 @@ def artemis_buy():
         if blue_weapon_count < 4 and (blue_ship_scrap - artemis_cost) >= 0:
             blue_weapon_count += 1
             blue_ship_missile_weps += 1
-            red_ship_missile_count += missile_increase
+            blue_ship_missile_count += missile_increase
             blue_ship_scrap -= artemis_cost
             blue_ship_weapons.append("artemis")
             build_weps()
@@ -896,7 +898,7 @@ def hermes_buy():
         if blue_weapon_count < 4 and (blue_ship_scrap - hermes_cost) >= 0:
             blue_weapon_count += 1
             blue_ship_missile_weps += 1
-            red_ship_missile_count += missile_increase
+            blue_ship_missile_count += missile_increase
             blue_ship_scrap -= hermes_cost
             blue_ship_weapons.append("hermes")
             build_weps()
@@ -908,13 +910,48 @@ def hermes_buy():
 hermes_button = Button(root, text="Hermes: Cost " + str(hermes_cost), command=hermes_buy)
 hermes_button.place(x=1300, y=oldy)
 
+def missile_buy():
+    global missile_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global red_ship_missile_count
+    global blue_ship_missile_count
+    if current_turn == "red":
+        if (red_ship_scrap - missile_cost) >= 0:
+            red_ship_scrap -= missile_cost
+            red_ship_missile_count += 1
+            missile_button.configure(text="1 Missile: Cost " + str(missile_cost) + " Current: " + str(red_ship_missile_count))
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if (blue_ship_scrap - missile_cost) >= 0:
+            blue_ship_scrap -= missile_cost
+            blue_ship_missile_count += 1
+            missile_button.configure(text="1 Missile: Cost " + str(missile_cost) + " Current: " + str(blue_ship_missile_count))
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+        else:
+            print("Nope")
+
+missile_button = Button(root, text="1 Missile: Cost " + str(missile_cost) + " Current: " + str(red_ship_missile_count), command=missile_buy)
+missile_button.place(x=1200, y=oldy)
+
+
+
 def check_missiles():
     if current_turn == "red":
+        missile_button.configure(text="1 Missile: Cost " + str(missile_cost) + " Current: " + str(red_ship_missile_count))
         if red_ship_missile_weps >= max_missile_weps:
             leto_button.configure(state=DISABLED)
             artemis_button.configure(state=DISABLED)
             hermes_button.configure(state=DISABLED)
     if current_turn == "blue":
+        missile_button.configure(text="1 Missile: Cost " + str(missile_cost) + " Current: " + str(blue_ship_missile_count))
         if blue_ship_missile_weps >= max_missile_weps:
             leto_button.configure(state=DISABLED)
             artemis_button.configure(state=DISABLED)
@@ -990,16 +1027,21 @@ END WEAPON STUFF
 
 
 def printallvalues(): #just a test thing
-    print(str(red_shield_lvl))
-    print(str(blue_shield_lvl))
-    print(str(red_engine_lvl))
-    print(str(blue_engine_lvl))
-    print(str(red_wep_lvl))
-    print(str(blue_wep_lvl))
-    print(str(red_ship_scrap))
-    print(str(blue_ship_scrap))
-    print(red_ship_weapons)
-    print(blue_ship_weapons)
+    print("RED SHIELD LEVEL  " + str(red_shield_lvl))
+    print("RED ENGINE LEVEL  " + str(red_engine_lvl))
+    print("RED WEAPON LEVEL  " + str(red_wep_lvl))
+    print("RED SCRAP  " + str(red_ship_scrap))
+    print("RED WEAPONS  " + str(red_ship_weapons))
+    print("RED MISSILES  " + str(red_ship_missile_count))
+    print("")
+    print("")
+    print("BLUE SHIELD LEVEL  " + str(blue_shield_lvl))
+    print("BLUE ENGINE LEVEL  " + str(blue_engine_lvl))
+    print("BLUE WEAPON LEVEL  " + str(blue_wep_lvl))
+    print("BLUE SCRAP  " + str(blue_ship_scrap))
+    print("BLUE WEAPONS  " + str(blue_ship_weapons))
+    print("BLUE MISSILES  " + str(blue_ship_missile_count))
+
 
 returnallvalues = Button(root, text="returnallupgradevalues", command=printallvalues)
 returnallvalues.place(x=430, y=70)
