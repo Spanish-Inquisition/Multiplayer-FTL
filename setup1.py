@@ -1,5 +1,5 @@
 from tkinter import *
-#Things to do: Add Ion wep buttons, Add heavy laser buttons, add missile buttons, add max missile weapon counter or something to limit missile weapons, add buy more missile buttons.
+#Things to do: add buy more missile buttons.
 import PIL
 from PIL import Image, ImageTk
 
@@ -21,6 +21,12 @@ engine_lvl_cost = [0, 10, 15, 30, 40, 60, 80, 120]
 red_wep_lvl = 0
 blue_wep_lvl = 0
 wep_lvl_cost = [0, 10, 25, 30, 45, 60, 80, 100]
+
+"""
+red_power_lvl = 4
+blue_power_lvl = 4
+power_lvl_cost = [20, 20, 20, 20, 20, 25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35]
+"""
 
 canvas = Canvas(root, height=900, width=1600, relief=RAISED, bg='black')
 canvas.grid()
@@ -86,6 +92,14 @@ def changeimagefirst():
     burst_laser_1_button.place(y=wep_row_1_newy)
     burst_laser_2_button.place(y=wep_row_1_newy)
     burst_laser_3_button.place(y=wep_row_1_newy)
+    heavy_laser_1_button.place(y=wep_row_2_newy)
+    heavy_laser_2_button.place(y=wep_row_2_newy)
+    ion_button.place(y=wep_row_2_newy)
+    ion_2_button.place(y=wep_row_2_newy)
+    heavy_ion_button.place(y=wep_row_2_newy)
+    leto_button.place(y=wep_row_3_newy)
+    artemis_button.place(y=wep_row_3_newy)
+    hermes_button.place(y=wep_row_3_newy)
 
 
 def changeimageblue():
@@ -101,6 +115,8 @@ def redturn():
     global current_turn
     current_turn = "red"
     reset_buttons()
+    check_missiles()
+    check_weapons()
     background.configure(image=redsetup_photo)
     button.configure(command=changeimageblue, text="<Red End Turn>", state=DISABLED)
     button.place(x=540, y=670)
@@ -120,6 +136,8 @@ def blueturn():
     global current_turn
     current_turn = "blue"
     reset_buttons()
+    check_missiles()
+    check_weapons()
     background.configure(image=bluesetup_photo)
     button.configure(command=changeimagered, text="<Blue End Turn>", state=DISABLED)
     button.place(x=535)
@@ -154,6 +172,14 @@ def overturn():
         burst_laser_1_button.configure(state=DISABLED)
         burst_laser_2_button.configure(state=DISABLED)
         burst_laser_3_button.configure(state=DISABLED)
+        heavy_laser_1_button.configure(state=DISABLED)
+        heavy_laser_2_button.configure(state=DISABLED)
+        ion_button.configure(state=DISABLED)
+        ion_2_button.configure(state=DISABLED)
+        heavy_ion_button.configure(state=DISABLED)
+        leto_button.configure(state=DISABLED)
+        artemis_button.configure(state=DISABLED)
+        hermes_button.configure(state=DISABLED)
         turn_count = 0
 
 redissuredone = 0
@@ -206,6 +232,16 @@ def reset_buttons():
     burst_laser_1_button.configure(state=NORMAL)
     burst_laser_2_button.configure(state=NORMAL)
     burst_laser_3_button.configure(state=NORMAL)
+    heavy_laser_1_button.configure(state=NORMAL)
+    heavy_laser_2_button.configure(state=NORMAL)
+    ion_button.configure(state=NORMAL)
+    ion_2_button.configure(state=NORMAL)
+    heavy_ion_button.configure(state=NORMAL)
+    leto_button.configure(state=NORMAL)
+    artemis_button.configure(state=NORMAL)
+    hermes_button.configure(state=NORMAL)
+    check_missiles()
+    check_weapons()
 
 gobutton = Button(root, text="GO!") #THIS BUTTON WILL EXECUTE THE COMMAND THAT DOES YOUR THING ALEX
 gobutton.place(x=750, y=oldy)
@@ -422,10 +458,14 @@ blue_weapon_count = 0
 red_ship_weapons = []
 blue_ship_weapons = []
 
+red_ship_missile_weps = 0
+blue_ship_missile_weps = 0
+
 red_ship_missile_count = 0
 blue_ship_missile_count = 0
 
 max_missile_weps = 1
+missile_increase = 5
 
 def basic_laser_buy():
     global basic_laser_cost
@@ -561,6 +601,356 @@ def burst_laser_3_buy():
 burst_laser_3_button = Button(root, text="Burst Laser 3: Cost " + str(burst_laser_3_cost), command=burst_laser_3_buy)
 burst_laser_3_button.place(x=1430, y=oldy)
 
+def heavy_laser_1_buy():
+    global heavy_laser_1_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - heavy_laser_1_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_scrap -= heavy_laser_1_cost
+            red_ship_weapons.append("heavy_laser_1")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - heavy_laser_1_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_scrap -= heavy_laser_1_cost
+            blue_ship_weapons.append("heavy_laser_1")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+heavy_laser_1_button = Button(root, text="Heavy Laser: Cost " + str(heavy_laser_1_cost), command=heavy_laser_1_buy)
+heavy_laser_1_button.place(x=1050, y=oldy)
+
+def heavy_laser_2_buy():
+    global heavy_laser_2_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - heavy_laser_2_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_scrap -= heavy_laser_2_cost
+            red_ship_weapons.append("heavy_laser_2")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - heavy_laser_2_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_scrap -= heavy_laser_2_cost
+            blue_ship_weapons.append("heavy_laser_2")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+heavy_laser_2_button = Button(root, text="Heavy Laser 2: Cost " + str(heavy_laser_2_cost), command=heavy_laser_2_buy)
+heavy_laser_2_button.place(x=1170, y=oldy)
+
+def ion_buy():
+    global ion_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - ion_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_scrap -= ion_cost
+            red_ship_weapons.append("ion")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - ion_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_scrap -= ion_cost
+            blue_ship_weapons.append("ion")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+ion_button = Button(root, text="Ion: Cost " + str(ion_cost), command=ion_buy)
+ion_button.place(x=1300, y=oldy)
+
+def heavy_ion_buy():
+    global heavy_ion_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - heavy_ion_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_scrap -= heavy_ion_cost
+            red_ship_weapons.append("heavy_ion")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - heavy_ion_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_scrap -= heavy_ion_cost
+            blue_ship_weapons.append("heavy_ion")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+heavy_ion_button = Button(root, text="Heavy Ion: Cost " + str(heavy_ion_cost), command=heavy_ion_buy)
+heavy_ion_button.place(x=1470, y=oldy)
+
+def ion_2_buy():
+    global ion_2_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - ion_2_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_scrap -= ion_2_cost
+            red_ship_weapons.append("ion_2")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - ion_2_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_scrap -= ion_2_cost
+            blue_ship_weapons.append("ion_2")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+ion_2_button = Button(root, text="Ion 2: Cost " + str(ion_2_cost), command=ion_2_buy)
+ion_2_button.place(x=1378, y=oldy)
+
+def leto_buy():
+    global leto_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    global red_ship_missile_weps
+    global blue_ship_missile_weps
+    global red_ship_missile_count
+    global blue_ship_missile_count
+    global missile_increase
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - leto_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            red_ship_scrap -= leto_cost
+            red_ship_weapons.append("leto")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - leto_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            blue_ship_scrap -= leto_cost
+            blue_ship_weapons.append("leto")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+leto_button = Button(root, text="Leto: Cost " + str(leto_cost), command=leto_buy)
+leto_button.place(x=1050, y=oldy)
+
+def artemis_buy():
+    global artemis_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    global red_ship_missile_weps
+    global blue_ship_missile_weps
+    global red_ship_missile_count
+    global blue_ship_missile_count
+    global missile_increase
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - artemis_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            red_ship_scrap -= artemis_cost
+            red_ship_weapons.append("artemis")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - artemis_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            blue_ship_scrap -= artemis_cost
+            blue_ship_weapons.append("artemis")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+artemis_button = Button(root, text="Artemis: Cost " + str(artemis_cost), command=artemis_buy)
+artemis_button.place(x=1170, y=oldy)
+
+def hermes_buy():
+    global hermes_cost
+    global current_turn
+    global red_weapon_count
+    global blue_weapon_count
+    global red_ship_weapons
+    global blue_ship_weapons
+    global red_ship_scrap
+    global blue_ship_scrap
+    global turn_count
+    global turn_max
+    global red_ship_missile_weps
+    global blue_ship_missile_weps
+    global red_ship_missile_count
+    global blue_ship_missile_count
+    global missile_increase
+    if current_turn == "red":
+        if red_weapon_count < 4 and (red_ship_scrap - hermes_cost) >= 0:
+            red_weapon_count += 1
+            red_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            red_ship_scrap -= hermes_cost
+            red_ship_weapons.append("hermes")
+            red_scrap.configure(text="RED SCRAP: " + str(red_ship_scrap))
+            build_weps()
+            overturn()
+        else:
+            print("Nope")
+    elif current_turn == "blue":
+        if blue_weapon_count < 4 and (blue_ship_scrap - hermes_cost) >= 0:
+            blue_weapon_count += 1
+            blue_ship_missile_weps += 1
+            red_ship_missile_count += missile_increase
+            blue_ship_scrap -= hermes_cost
+            blue_ship_weapons.append("hermes")
+            build_weps()
+            blue_scrap.configure(text="BLUE SCRAP: " + str(blue_ship_scrap))
+            overturn()
+        else:
+            print("Nope")
+
+hermes_button = Button(root, text="Hermes: Cost " + str(hermes_cost), command=hermes_buy)
+hermes_button.place(x=1300, y=oldy)
+
+def check_missiles():
+    if current_turn == "red":
+        if red_ship_missile_weps >= max_missile_weps:
+            leto_button.configure(state=DISABLED)
+            artemis_button.configure(state=DISABLED)
+            hermes_button.configure(state=DISABLED)
+    if current_turn == "blue":
+        if blue_ship_missile_weps >= max_missile_weps:
+            leto_button.configure(state=DISABLED)
+            artemis_button.configure(state=DISABLED)
+            hermes_button.configure(state=DISABLED)
+
+def check_weapons():
+    if current_turn == "red":
+        if red_weapon_count >= 4:
+            basic_laser_button.configure(state=DISABLED)
+            burst_laser_1_button.configure(state=DISABLED)
+            burst_laser_2_button.configure(state=DISABLED)
+            burst_laser_3_button.configure(state=DISABLED)
+            heavy_laser_1_button.configure(state=DISABLED)
+            heavy_laser_2_button.configure(state=DISABLED)
+            ion_button.configure(state=DISABLED)
+            ion_2_button.configure(state=DISABLED)
+            heavy_ion_button.configure(state=DISABLED)
+            leto_button.configure(state=DISABLED)
+            artemis_button.configure(state=DISABLED)
+            hermes_button.configure(state=DISABLED)
+            #disable all weps
+    if current_turn == "blue":
+        if blue_weapon_count >= 4:
+            basic_laser_button.configure(state=DISABLED)
+            burst_laser_1_button.configure(state=DISABLED)
+            burst_laser_2_button.configure(state=DISABLED)
+            burst_laser_3_button.configure(state=DISABLED)
+            heavy_laser_1_button.configure(state=DISABLED)
+            heavy_laser_2_button.configure(state=DISABLED)
+            ion_button.configure(state=DISABLED)
+            ion_2_button.configure(state=DISABLED)
+            heavy_ion_button.configure(state=DISABLED)
+            leto_button.configure(state=DISABLED)
+            artemis_button.configure(state=DISABLED)
+            hermes_button.configure(state=DISABLED)
+            #disable all weps
 
 weapony = 600
 def build_weps():
@@ -590,6 +980,8 @@ def build_weps():
     if blue_weapon_count == 4:
         BlueWeapon4 = Label(root, text=blue_ship_weapons[3], bd=6)
         BlueWeapon4.place(x=1200, y=weapony)
+    check_weapons()
+    check_missiles()
 """
 
 END WEAPON STUFF
