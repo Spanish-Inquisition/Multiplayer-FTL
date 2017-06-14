@@ -29,13 +29,6 @@ halberd_beam_cost = 65
 glaive_beam_cost = 95
 #beam
 
-small_bomb_cost = 45
-ion_bomb_cost = 55
-breach_1_cost = 50
-breach_2_cost = 60
-repair_bomb = 40
-#bombs
-
 """SYSTEMS"""
 shield_init_cost = 125
 shield_lvl_1_cost = 20
@@ -52,26 +45,4 @@ engine_lvl_4_cost = 40
 engine_lvl_5_cost = 60
 engine_lvl_6_cost = 80
 engine_lvl_7_cost = 120
-
-wep_lvl_1_cost = 20
-wep_lvl_2_cost = 30
-wep_lvl_3_cost = 45
-wep_lvl_4_cost = 60
-wep_lvl_5_cost = 80
-wep_lvl_6_Cost = 100
-
-cloak_init_cost = 150
-cloak_lvl_1_cost = 30
-cloak_lvl_2_cost = 50
-cloak_lvl_3_cost = 80
-
-hack_init_cost = 85
-hack_lvl_1_cost = 35
-hack_lvl_2_cost = 60
-
-"""SUBSYSTEMS"""
-
-pilot_lvl_1_cost = 20
-pilot_lvl_2_cost = 50
-
 
