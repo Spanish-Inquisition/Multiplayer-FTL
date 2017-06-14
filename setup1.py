@@ -7,7 +7,7 @@ root = Tk()
 
 red_ship_scrap = 800
 blue_ship_scrap = 800
-turn_max = 2
+turn_max = 2  #number of turns to take - 1
 
 """SYSTEMS"""
 red_shield_lvl = 2
